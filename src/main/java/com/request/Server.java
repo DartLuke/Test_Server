@@ -22,7 +22,7 @@ public class Server {
         String GUID = UUID.randomUUID().toString();
         GUID = "1";
         singleton.setGUID(GUID);
-        res.put("GUID", GUID);
+        res.put("ServiceSessionId", GUID);
 
         return new ResponseEntity<Map>(res, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class Server {
     }
 
     private void processPaymentProcessing(String GUID) {
-      //  new Client().ProcessPaymentCallBack(GUID);
+       new Client().ProcessPaymentCallBack(GUID);
     }
 
     //step four

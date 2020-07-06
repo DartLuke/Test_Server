@@ -4,21 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ProcessPayment {
 
-    private RoutingNode[] routingNode;
+    private RoutingNode[] Route;
     private String CallbackUrl; 		        // process command url
-    private String PaymentRequest;	        // json body
+    private PaymentRequest PaymentRequest;	        // json body
     private String NodeId;           		// request reference identification
-    private String Route;
+
 @JsonIgnore
 private int counter=-1;
 
 
-    public RoutingNode[] getRoutingNode() {
-        return routingNode;
+    public RoutingNode[] Route() {
+        return Route;
     }
 
-    public void setRoutingNode(RoutingNode[] routingNode) {
-        this.routingNode = routingNode;
+    public void setRoute(RoutingNode[] routingNode) {
+        this.Route = routingNode;
     }
 
     public String getCallbackUrl() {
@@ -29,11 +29,11 @@ private int counter=-1;
         CallbackUrl = callbackUrl;
     }
 
-    public String getPaymentRequest() {
+    public PaymentRequest getPaymentRequest() {
         return PaymentRequest;
     }
 
-    public void setPaymentRequest(String paymentRequest) {
+    public void setPaymentRequest(PaymentRequest paymentRequest) {
         PaymentRequest = paymentRequest;
     }
 
@@ -43,14 +43,6 @@ private int counter=-1;
 
     public void setNodeId(String nodeId) {
         NodeId = nodeId;
-    }
-
-    public String getRoute() {
-        return Route;
-    }
-
-    public void setRoute(String route) {
-        Route = route;
     }
 
     public int getCounter() {
@@ -64,12 +56,11 @@ private int counter=-1;
     public ProcessPayment() {
     }
 
-    public ProcessPayment(RoutingNode[] routingNode, String callbackUrl, String paymentRequest, String nodeId, String route, int counter) {
-        this.routingNode = routingNode;
+    public ProcessPayment(RoutingNode[] Route, String callbackUrl, PaymentRequest paymentRequest, String nodeId, String route, int counter) {
+        this.Route = Route;
         CallbackUrl = callbackUrl;
         PaymentRequest = paymentRequest;
         NodeId = nodeId;
-        Route = route;
         this.counter = counter;
     }
 
@@ -81,11 +72,11 @@ private int counter=-1;
 
     public boolean isEndOfArray()
     {
-        return !(counter<routingNode.length);
+        return !(counter<Route.length);
     }
 
     public String getNodeFromArray()
     {
-        return routingNode[counter].getNodeId();
+        return Route[counter].getNodeId();
     }
 }

@@ -21,9 +21,9 @@ public class Client {
         ProcessPayment processPayment = Singleton.getInstance().getProcessPayment(GUID);
         UtilityCommand utilityCommand;
         if(processPayment.getCounter()==-1)
-        utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCall_back_url(), "command_id", processPayment.getNode_id(),processPayment.getSession_id());
+        utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCallbackUrl(), "command_id", processPayment.getNodeId(),GUID);
            else if(processPayment.isEndOfArray()) return;
-           else utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCall_back_url(), "command_id", processPayment.getNodeFromArray(),processPayment.getSession_id());
+           else utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCallbackUrl(), "command_id", processPayment.getNodeFromArray(),GUID);
 
 
         System.out.println("ProcessPaymentCallBack");
@@ -32,7 +32,7 @@ public class Client {
         final ProcessCommand[] pc = new ProcessCommand[1];
         //Mono<ProcessCommand> responseMono =
                 webClient.post()
-                        .uri(processPayment.getCall_back_url())
+                        .uri(processPayment.getCallbackUrl())
                         .body(Mono.just(utilityCommand), UtilityCommand.class)
                         .exchange().subscribe(clientResponse -> System.out.println(clientResponse.statusCode()));
 
