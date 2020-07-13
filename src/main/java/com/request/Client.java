@@ -11,8 +11,8 @@ import reactor.core.publisher.Mono;
 
 public class Client {
 
- private    String url = "http://localhost:8080";
-    private  WebClient webClient = WebClient.builder().baseUrl(url).build();
+ //private    String url = "http://localhost:8080";7
+    private  WebClient webClient = WebClient.builder().build();//.baseUrl(url).build();
     private Singleton singleton = Singleton.getInstance();
 
 

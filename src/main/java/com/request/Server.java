@@ -20,7 +20,7 @@ public class Server {
         Singleton singleton = Singleton.getInstance();
         Map<String, Object> res = new HashMap<>();
         String GUID = UUID.randomUUID().toString();
-        GUID = "1";
+       // GUID = "1";
         singleton.setGUID(GUID);
         res.put("ServiceSessionId", GUID);
 
