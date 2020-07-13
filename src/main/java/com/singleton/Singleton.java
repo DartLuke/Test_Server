@@ -22,7 +22,7 @@ public class Singleton {
     }
 
     public void setProcessPaymentMap(ProcessPayment processPayment) {
-       processPaymentMap.put(processPayment.getSession_id(),processPayment);
+       processPaymentMap.put(processPayment.getPaymentRequest().getServiceSessionId(),processPayment);
 
     }
 

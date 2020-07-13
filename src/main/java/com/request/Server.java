@@ -35,15 +35,14 @@ public class Server {
         singleton.setProcessPaymentMap(processPayment);
         Map<String, String> res = new HashMap<>();
 
-        RoutingNode[] a={new RoutingNode("a","b"),new RoutingNode("a","b"),};
-        processPayment=new ProcessPayment(a,"a","a","a","a",-1);
+       
 
 
         System.out.println(processPayment);
 
         //**********************************************
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        processPaymentProcessing(processPayment.getRoute());
+        processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
        //return new ResponseEntity<Map>(res, HttpStatus.OK);
         return new ResponseEntity<ProcessPayment>(processPayment, HttpStatus.OK);

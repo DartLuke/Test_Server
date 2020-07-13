@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-
+import java.util.Collections;
 
 
 @SpringBootApplication
@@ -18,7 +18,12 @@ public class App {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication app = new SpringApplication(App.class);
+        app.setDefaultProperties(Collections
+                .singletonMap("server.port", "5648"));
+        app.run(args);
+
+
 
 //        Client n=new Client();
 //        n.func();
