@@ -29,7 +29,7 @@ public class Client {
         System.out.println("ProcessPaymentCallBack");
 
 
-        final ProcessCommand[] pc = new ProcessCommand[1];
+       // final ProcessCommand[] pc = new ProcessCommand[1];
         //Mono<ProcessCommand> responseMono =
                 webClient.post()
                         .uri(processPayment.getCallbackUrl())

@@ -31,21 +31,25 @@ public class Server {
     @RequestMapping(value = "api/gateway/processPayment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processPayment(@RequestBody ProcessPayment processPayment) {
 
-        Singleton singleton = Singleton.getInstance();
-        singleton.setProcessPaymentMap(processPayment);
+        //Singleton singleton = Singleton.getInstance();
+        //singleton.setProcessPaymentMap(processPayment);
         Map<String, String> res = new HashMap<>();
 
-       
+if (processPayment==null)
+{
+    res.put("Status", "Error, processPayment is null");
+    return new ResponseEntity<Map>(res,HttpStatus.BAD_REQUEST);
+}
 
 
-        System.out.println(processPayment);
+        //System.out.println(processPayment);
 
         //**********************************************
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
-       //return new ResponseEntity<Map>(res, HttpStatus.OK);
-        return new ResponseEntity<ProcessPayment>(processPayment, HttpStatus.OK);
+       return new ResponseEntity<Map>(res, HttpStatus.OK);
+     //   return new ResponseEntity<ProcessPayment>(processPayment, HttpStatus.OK);
     }
 
     private void processPaymentProcessing(String GUID) {

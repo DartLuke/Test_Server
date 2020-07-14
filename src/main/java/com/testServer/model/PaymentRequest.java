@@ -1,6 +1,12 @@
 package com.testServer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PaymentRequest {
+    String ServiceSessionId;
+
+
+    @JsonProperty("ServiceSessionId")
     public String getServiceSessionId() {
         return ServiceSessionId;
     }
@@ -16,7 +22,7 @@ public class PaymentRequest {
         ServiceSessionId = serviceSessionId;
     }
 
-    String ServiceSessionId;
+
 
 
 }

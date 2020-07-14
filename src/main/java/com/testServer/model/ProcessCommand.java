@@ -1,5 +1,7 @@
 package com.testServer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProcessCommand {
     String CommandType;
     String CommandBody;
@@ -8,26 +10,30 @@ public class ProcessCommand {
     String NodeId;
     String SessionId;
 
+  @JsonProperty("CommandType")
     public String getCommandType() {
         return CommandType;
     }
 
+    @JsonProperty("CommandBody")
     public String getCommandBody() {
         return CommandBody;
     }
 
+    @JsonProperty("CommandId")
     public String getCommandId() {
         return CommandId;
     }
 
+    @JsonProperty("CallbackUrl")
     public String getCallbackUrl() {
         return CallbackUrl;
     }
-
+    @JsonProperty("NodeId")
     public String getNodeId() {
         return NodeId;
     }
-
+    @JsonProperty("SessionId")
     public String getSessionId() {
         return SessionId;
     }

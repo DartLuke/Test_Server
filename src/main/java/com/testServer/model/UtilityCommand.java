@@ -1,5 +1,7 @@
 package com.testServer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UtilityCommand {
 
     private int CommandType;
@@ -21,6 +23,7 @@ public class UtilityCommand {
         SessionId = sessionId;
     }
 
+    @JsonProperty("CommandType")
     public int getCommandType() {
         return CommandType;
     }
@@ -29,6 +32,7 @@ public class UtilityCommand {
         CommandType = commandType;
     }
 
+    @JsonProperty("CommandBody")
     public String getCommandBody() {
         return CommandBody;
     }
@@ -37,6 +41,7 @@ public class UtilityCommand {
         CommandBody = commandBody;
     }
 
+    @JsonProperty("CallbackUrl")
     public String getCallbackUrl() {
         return CallbackUrl;
     }
@@ -45,6 +50,7 @@ public class UtilityCommand {
         CallbackUrl = callbackUrl;
     }
 
+    @JsonProperty("CommandId")
     public String getCommandId() {
         return CommandId;
     }
@@ -53,6 +59,7 @@ public class UtilityCommand {
         CommandId = commandId;
     }
 
+    @JsonProperty("NodeId")
     public String getNodeId() {
         return NodeId;
     }
@@ -61,6 +68,7 @@ public class UtilityCommand {
         NodeId = nodeId;
     }
 
+    @JsonProperty("SessionId")
     public String getSessionId() {
         return SessionId;
     }

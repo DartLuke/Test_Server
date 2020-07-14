@@ -1,5 +1,7 @@
 package com.testServer.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProcessResponse {
 
     String NodeId;
@@ -17,6 +19,7 @@ public class ProcessResponse {
     public ProcessResponse() {
     }
 
+   @JsonProperty("NodeId")
     public String getNodeId() {
         return NodeId;
     }
@@ -24,7 +27,7 @@ public class ProcessResponse {
     public void setNodeId(String nodeId) {
         NodeId = nodeId;
     }
-
+    @JsonProperty("CommandId")
     public String getCommandId() {
         return CommandId;
     }
@@ -33,6 +36,7 @@ public class ProcessResponse {
         CommandId = commandId;
     }
 
+    @JsonProperty("CommandId")
     public String getSessionId() {
         return SessionId;
     }
@@ -41,6 +45,7 @@ public class ProcessResponse {
         SessionId = sessionId;
     }
 
+    @JsonProperty("ResponseBody")
     public String getResponseBody() {
         return ResponseBody;
     }

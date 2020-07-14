@@ -1,17 +1,35 @@
 package com.testServer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProcessPayment {
 
     private RoutingNode[] Route;
-    private String CallbackUrl; 		        // process command url
-    private PaymentRequest PaymentRequest;	        // json body
-    private String NodeId;           		// request reference identification
+    private String CallbackUrl;                // process command url
+    private PaymentRequest PaymentRequest;            // json body
+    private String NodeId;                // request reference identification
+    private String StatusCallbackUrl;
 
-@JsonIgnore
-private int counter=-1;
+    @JsonProperty("StatusCallbackUrl")
+    public String getStatusCallbackUrl() {
+        return StatusCallbackUrl;
+    }
 
+    public void setStatusCallbackUrl(String statusCallbackUrl) {
+        StatusCallbackUrl = statusCallbackUrl;
+    }
+
+
+
+    @JsonIgnore
+    private int counter = -1;
+
+
+    @JsonProperty("Route")
+    public RoutingNode[] getRoute() {
+        return Route;
+    }
 
     public RoutingNode[] Route() {
         return Route;
@@ -21,6 +39,7 @@ private int counter=-1;
         this.Route = routingNode;
     }
 
+    @JsonProperty("CallbackUrl")
     public String getCallbackUrl() {
         return CallbackUrl;
     }
@@ -29,6 +48,7 @@ private int counter=-1;
         CallbackUrl = callbackUrl;
     }
 
+    @JsonProperty("PaymentRequest")
     public PaymentRequest getPaymentRequest() {
         return PaymentRequest;
     }
@@ -37,6 +57,7 @@ private int counter=-1;
         PaymentRequest = paymentRequest;
     }
 
+    @JsonProperty("NodeId")
     public String getNodeId() {
         return NodeId;
     }
@@ -56,27 +77,25 @@ private int counter=-1;
     public ProcessPayment() {
     }
 
-    public ProcessPayment(RoutingNode[] Route, String callbackUrl, PaymentRequest paymentRequest, String nodeId, String route, int counter) {
-        this.Route = Route;
+    public ProcessPayment(RoutingNode[] route, String callbackUrl, com.testServer.model.PaymentRequest paymentRequest, String nodeId) {
+        Route = route;
         CallbackUrl = callbackUrl;
         PaymentRequest = paymentRequest;
         NodeId = nodeId;
-        this.counter = counter;
     }
 
     //**************************************************************************************
-    public void counterPlus()
-    {
+    public void counterPlus() {
         counter++;
     }
 
-    public boolean isEndOfArray()
-    {
-        return !(counter<Route.length);
+    @JsonIgnore
+    public boolean isEndOfArray() {
+        return !(counter < Route.length);
     }
 
-    public String getNodeFromArray()
-    {
+    @JsonIgnore
+    public String getNodeFromArray() {
         return Route[counter].getNodeId();
     }
 }
