@@ -24,6 +24,10 @@ public class Server {
         singleton.setGUID(GUID);
         res.put("ServiceSessionId", GUID);
 
+
+        System.out.println("receiving request");
+        System.out.println("api/utility/createPaymentInfo");
+        System.out.println("Generating Session Id "+GUID);
         return new ResponseEntity<Map>(res, HttpStatus.OK);
     }
 
@@ -40,10 +44,10 @@ public class Server {
         }
 
 
-        //System.out.println(processPayment);
+        System.out.println("receiving request");
+        System.out.println("api/gateway/processPayment");
+        System.out.println("Session Id="+processPayment.getPaymentRequest().getServiceSessionId());
 
-        //**********************************************
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
         return new ResponseEntity<Map>(res, HttpStatus.OK);
@@ -57,21 +61,29 @@ public class Server {
     //step four
     @RequestMapping(value = "api/gateway/processCommand", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processCommand(@RequestBody ProcessCommand processCommand) {
-        System.out.println("processCommand");
+        System.out.println("receiving request");
+        System.out.println("api/gateway/processCommand");
+        System.out.println("Session Id="+processCommand.getSessionId());
 
         new Client().ProcessCommandCallBack(processCommand);
 
 
-        ProcessCommand pc = new ProcessCommand("a", "a", "a", "a", "a", "a");
 
-        System.out.println(pc);
 
-        return new ResponseEntity<ProcessCommand>(pc, HttpStatus.OK);
+        Map<String, String> res = new HashMap<>();
+        res.put("Status", "Ok");
+
+       // return new ResponseEntity<ProcessCommand>(processCommand, HttpStatus.OK);
+        return new ResponseEntity<Map>(res, HttpStatus.OK);
     }
 
     //Step six
     @RequestMapping(value = "api/gateway/processResponse", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processResponse(@RequestBody ProcessResponse processResponse) {
+        System.out.println("receiving request");
+        System.out.println("api/gateway/processResponse");
+        System.out.println("Session Id="+processResponse.getSessionId());
+
 
 
         new Client().ProcessPaymentCallBack(processResponse.getSessionId());

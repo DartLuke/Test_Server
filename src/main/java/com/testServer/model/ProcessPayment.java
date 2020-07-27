@@ -66,6 +66,7 @@ public class ProcessPayment {
         NodeId = nodeId;
     }
 
+    @JsonIgnore
     public int getCounter() {
         return counter;
     }
@@ -85,6 +86,7 @@ public class ProcessPayment {
     }
 
     //**************************************************************************************
+    @JsonIgnore
     public void counterPlus() {
         counter++;
     }
@@ -95,7 +97,13 @@ public class ProcessPayment {
     }
 
     @JsonIgnore
-    public String getNodeFromArray() {
+    public String getMyNode() {
+
+        if (counter==-1) {
+            return NodeId;
+        }
+        if(isEndOfArray()) return null;
+        else
         return Route[counter].getNodeId();
     }
 }
