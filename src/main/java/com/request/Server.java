@@ -20,7 +20,7 @@ public class Server {
         Singleton singleton = Singleton.getInstance();
         Map<String, Object> res = new HashMap<>();
         String GUID = UUID.randomUUID().toString();
-       // GUID = "1";
+        // GUID = "1";
         singleton.setGUID(GUID);
         res.put("ServiceSessionId", GUID);
 
@@ -30,16 +30,14 @@ public class Server {
     //step two
     @RequestMapping(value = "api/gateway/processPayment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processPayment(@RequestBody ProcessPayment processPayment) {
-
-        //Singleton singleton = Singleton.getInstance();
-        //singleton.setProcessPaymentMap(processPayment);
+        Singleton singleton = Singleton.getInstance();
+        singleton.setProcessPaymentMap(processPayment);
         Map<String, String> res = new HashMap<>();
 
-if (processPayment==null)
-{
-    res.put("Status", "Error, processPayment is null");
-    return new ResponseEntity<Map>(res,HttpStatus.BAD_REQUEST);
-}
+        if (processPayment == null) {
+            res.put("Status", "Error, processPayment is null");
+            return new ResponseEntity<Map>(res, HttpStatus.BAD_REQUEST);
+        }
 
 
         //System.out.println(processPayment);
@@ -48,12 +46,12 @@ if (processPayment==null)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
-       return new ResponseEntity<Map>(res, HttpStatus.OK);
-     //   return new ResponseEntity<ProcessPayment>(processPayment, HttpStatus.OK);
+        return new ResponseEntity<Map>(res, HttpStatus.OK);
+        //   return new ResponseEntity<ProcessPayment>(processPayment, HttpStatus.OK);
     }
 
     private void processPaymentProcessing(String GUID) {
-       new Client().ProcessPaymentCallBack(GUID);
+        new Client().ProcessPaymentCallBack(GUID);
     }
 
     //step four
@@ -62,7 +60,6 @@ if (processPayment==null)
         System.out.println("processCommand");
 
         new Client().ProcessCommandCallBack(processCommand);
-
 
 
         ProcessCommand pc = new ProcessCommand("a", "a", "a", "a", "a", "a");
@@ -77,9 +74,7 @@ if (processPayment==null)
     private ResponseEntity<?> processResponse(@RequestBody ProcessResponse processResponse) {
 
 
-
-
-new Client().ProcessPaymentCallBack(processResponse.getSessionId());
+        new Client().ProcessPaymentCallBack(processResponse.getSessionId());
         Map<String, String> res = new HashMap<>();
         res.put("Status", "Ok");
         return new ResponseEntity<Map>(res, HttpStatus.OK);
