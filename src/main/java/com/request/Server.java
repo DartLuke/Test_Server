@@ -48,6 +48,7 @@ public class Server {
         System.out.println("api/gateway/processPayment");
         System.out.println("Session Id="+processPayment.getPaymentRequest().getServiceSessionId());
 
+        processPayment.getPaymentRequest().getServiceSessionId().trim();
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
         return new ResponseEntity<Map>(res, HttpStatus.OK);

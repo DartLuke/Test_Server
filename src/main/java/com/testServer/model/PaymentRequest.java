@@ -22,6 +22,19 @@ public class PaymentRequest {
         ServiceSessionId = serviceSessionId;
     }
 
+    public void trim()
+    {
+try {
+    ServiceSessionId = ServiceSessionId.split("ServiceSessionId\":\"")[1].split("\"")[0];
+}
+catch (Exception e)
+{
+
+}
+
+    }
+
+
 
 
 
