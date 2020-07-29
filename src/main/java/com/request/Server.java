@@ -35,6 +35,7 @@ public class Server {
     @RequestMapping(value = "api/gateway/processPayment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processPayment(@RequestBody ProcessPayment processPayment) {
         Singleton singleton = Singleton.getInstance();
+        processPayment.getPaymentRequest().trimmmm();
         singleton.setProcessPaymentMap(processPayment);
         Map<String, String> res = new HashMap<>();
 
@@ -48,7 +49,7 @@ public class Server {
         System.out.println("api/gateway/processPayment");
         System.out.println("Session Id="+processPayment.getPaymentRequest().getServiceSessionId());
 
-        processPayment.getPaymentRequest().getServiceSessionId().trim();
+
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
         return new ResponseEntity<Map>(res, HttpStatus.OK);
@@ -60,10 +61,10 @@ public class Server {
     }
 
     //step four
-    @RequestMapping(value = "api/gateway/processCommand", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/utility/processCommand", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processCommand(@RequestBody ProcessCommand processCommand) {
         System.out.println("receiving request");
-        System.out.println("api/gateway/processCommand");
+        System.out.println("api/utility/processCommand");
         System.out.println("Session Id="+processCommand.getSessionId());
 
         new Client().ProcessCommandCallBack(processCommand);

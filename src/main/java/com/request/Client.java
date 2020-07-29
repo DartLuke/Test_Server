@@ -49,14 +49,14 @@ public class Client {
     //step three 5;
     public void ProcessCommandCallBack(ProcessCommand processCommand) {
 
-System.out.println("Sending Request");
+        System.out.println("Sending Request");
         System.out.println(processCommand.getCallbackUrl());
 
-        System.out.println("Node id "+processCommand.getNodeId());
+        System.out.println("Node id " + processCommand.getNodeId());
         webClient.post()
                 .uri(processCommand.getCallbackUrl())
-                .body(Mono.just(processCommand), UtilityCommand.class)
-                .exchange().subscribe(clientResponse -> System.out.println("Response code " +clientResponse.statusCode()));
+                .body(Mono.just(kkk), UtilityCommand.class)
+                .exchange().subscribe(clientResponse -> System.out.println("Response code " + clientResponse.statusCode()));
 
 
     }

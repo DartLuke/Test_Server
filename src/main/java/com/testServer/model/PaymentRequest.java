@@ -22,7 +22,7 @@ public class PaymentRequest {
         ServiceSessionId = serviceSessionId;
     }
 
-    public void trim()
+    public void trimmmm()
     {
 try {
     ServiceSessionId = ServiceSessionId.split("ServiceSessionId\":\"")[1].split("\"")[0];
