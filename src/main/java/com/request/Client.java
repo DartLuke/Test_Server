@@ -1,10 +1,7 @@
 package com.request;
 
 import com.singleton.Singleton;
-import com.testServer.model.CreatePaymentInfo;
-import com.testServer.model.ProcessCommand;
-import com.testServer.model.ProcessPayment;
-import com.testServer.model.UtilityCommand;
+import com.testServer.model.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -33,7 +30,7 @@ public class Client {
 
         processPayment.counterPlus();
 
-        System.out.println("Node id "+nodeId);
+        System.out.println("Node id " + nodeId);
 
 
         // final ProcessCommand[] pc = new ProcessCommand[1];
@@ -55,7 +52,7 @@ public class Client {
         System.out.println("Node id " + processCommand.getNodeId());
         webClient.post()
                 .uri(processCommand.getCallbackUrl())
-                .body(Mono.just(kkk), UtilityCommand.class)
+                .body(Mono.just(new ProcessResponse(processCommand)), ProcessResponse.class)
                 .exchange().subscribe(clientResponse -> System.out.println("Response code " + clientResponse.statusCode()));
 
 
