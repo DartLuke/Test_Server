@@ -3,12 +3,12 @@ package com.testServer.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProcessCommand {
-    String CommandType;
-    String CommandBody;
-    String CommandId;
-    String CallbackUrl;
-    String NodeId;
-    String SessionId;
+    private String CommandType;
+    private String CommandBody;
+    private String CommandId;
+    private String CallbackUrl;
+    private String NodeId;
+    private String SessionId;
 
   @JsonProperty("CommandType")
     public String getCommandType() {

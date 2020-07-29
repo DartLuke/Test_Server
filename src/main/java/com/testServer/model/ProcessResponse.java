@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProcessResponse {
 
-    String NodeId;
-    String CommandId;
-    String SessionId;
-    String ResponseBody;
+    private String NodeId;
+    private String CommandId;
+    private String SessionId;
+    private String ResponseBody;
 
     public ProcessResponse(String nodeId, String commandId, String sessionId, String responseBody) {
         NodeId = nodeId;
@@ -19,7 +19,14 @@ public class ProcessResponse {
     public ProcessResponse() {
     }
 
-   @JsonProperty("NodeId")
+    public ProcessResponse(ProcessCommand processCommand) {
+        this.NodeId = processCommand.getNodeId();
+        this.CommandId = processCommand.getCommandId();
+        this.SessionId = processCommand.getSessionId();
+        this.ResponseBody = "";
+    }
+
+    @JsonProperty("NodeId")
     public String getNodeId() {
         return NodeId;
     }
@@ -27,6 +34,7 @@ public class ProcessResponse {
     public void setNodeId(String nodeId) {
         NodeId = nodeId;
     }
+
     @JsonProperty("CommandId")
     public String getCommandId() {
         return CommandId;
