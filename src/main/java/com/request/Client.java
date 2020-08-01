@@ -18,15 +18,19 @@ public class Client {
         ProcessPayment processPayment = Singleton.getInstance().getProcessPayment(GUID);
         UtilityCommand utilityCommand;
         String nodeId = processPayment.getMyNode();
-        System.out.println("Sending Request");
-        System.out.println(processPayment.getCallbackUrl());
         if (nodeId == null) {
             System.out.println("End of node array");
+            System.out.println("Sending Request");
+            System.out.println(processPayment.getStatusCallbackUrl());
+            webClient.post()
+                    .uri(processPayment.getStatusCallbackUrl())
+                    .body(Mono.just(new CompleteCommand(1, GUID)), CompleteCommand.class)
+                    .exchange().subscribe(clientResponse -> System.out.println("Response code " + clientResponse.statusCode()));
             return;
-        } else
-
-
-            utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCallbackUrl(), "command_id", nodeId, GUID);
+        }
+        System.out.println("Sending Request");
+        System.out.println(processPayment.getCallbackUrl());
+        utilityCommand = new UtilityCommand(0, "command_body", processPayment.getCallbackUrl(), "command_id", nodeId, GUID);
 
         processPayment.counterPlus();
 
@@ -52,7 +56,7 @@ public class Client {
         System.out.println("Node id " + processCommand.getNodeId());
         webClient.post()
                 .uri(processCommand.getCallbackUrl())
-                .body(Mono.just(new ProcessResponse(processCommand)), ProcessResponse.class)
+                .body(Mono.just(new ResponseCommand(processCommand)), ResponseCommand.class)
                 .exchange().subscribe(clientResponse -> System.out.println("Response code " + clientResponse.statusCode()));
 
 

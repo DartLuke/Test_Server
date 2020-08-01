@@ -80,7 +80,7 @@ public class Server {
     }
 
     //Step six
-    @RequestMapping(value = "api/gateway/processResponse", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/gateway/processResponse", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
     private ResponseEntity<?> processResponse(@RequestBody ProcessResponse processResponse) {
         System.out.println("receiving request");
         System.out.println("api/gateway/processResponse");

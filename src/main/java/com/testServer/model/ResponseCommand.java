@@ -2,24 +2,24 @@ package com.testServer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProcessResponse {
+public class ResponseCommand {
 
     private String NodeId;
     private String CommandId;
     private String SessionId;
     private String ResponseBody;
 
-    public ProcessResponse(String nodeId, String commandId, String sessionId, String responseBody) {
+    public ResponseCommand(String nodeId, String commandId, String sessionId, String responseBody) {
         NodeId = nodeId;
         CommandId = commandId;
         SessionId = sessionId;
         ResponseBody = responseBody;
     }
 
-    public ProcessResponse() {
+    public ResponseCommand() {
     }
 
-    public ProcessResponse(ProcessCommand processCommand) {
+    public ResponseCommand(ProcessCommand processCommand) {
         this.NodeId = processCommand.getNodeId();
         this.CommandId = processCommand.getCommandId();
         this.SessionId = processCommand.getSessionId();
@@ -53,7 +53,7 @@ public class ProcessResponse {
         SessionId = sessionId;
     }
 
-    @JsonProperty("ResponseBody")
+    @JsonProperty("CommandResponse")
     public String getResponseBody() {
         return ResponseBody;
     }
