@@ -34,7 +34,7 @@ public class Client {
 
         processPayment.counterPlus();
 
-        System.out.println("Node id " + nodeId);
+        System.out.println("NODE ID: " + nodeId);
 
 
         // final ProcessCommand[] pc = new ProcessCommand[1];
@@ -53,7 +53,7 @@ public class Client {
         System.out.println("Sending Request");
         System.out.println(processCommand.getCallbackUrl());
 
-        System.out.println("Node id " + processCommand.getNodeId());
+        System.out.println("NODE ID: " + processCommand.getNodeId());
         webClient.post()
                 .uri(processCommand.getCallbackUrl())
                 .body(Mono.just(new ResponseCommand(processCommand)), ResponseCommand.class)
