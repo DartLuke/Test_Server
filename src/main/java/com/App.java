@@ -1,5 +1,6 @@
 package com;
 
+import com.bash.Bash;
 import com.request.Client;
 import com.request.ServerTemp;
 import org.springframework.boot.SpringApplication;
@@ -22,11 +23,9 @@ public class App {
         app.setDefaultProperties(Collections
                 .singletonMap("server.port", "5648"));
         app.run(args);
+        Bash bash = new Bash();
+        bash.executeDefault();
 
-
-
-//        Client n=new Client();
-//        n.func();
 
     }
 }
