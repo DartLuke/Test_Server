@@ -8,7 +8,9 @@ import java.util.Map;
 public class Singleton {
     private static Singleton instance;
     //private String GUID;
-    private Map<String,ProcessPayment> processPaymentMap= new HashMap<>();
+    private Map<String, ProcessPayment> processPaymentMap = new HashMap<>();
+    private Map<String, Boolean> processPaymentCheck = new HashMap<>();
+
     public static synchronized Singleton getInstance() {
         if (instance == null) {
             instance = new Singleton();
@@ -16,14 +18,27 @@ public class Singleton {
         return instance;
     }
 
+    public void checkProcessPayment(String GUID) {
+        processPaymentCheck.put(GUID, true);
+    }
+
+    public boolean isAllchecked() {
+        return !processPaymentCheck.containsValue(false);
+    }
+
     public void setGUID(String GUID) {
-       processPaymentMap.put(GUID,null);
+        processPaymentMap.put(GUID, null);
+        processPaymentCheck.put(GUID, false);
 
     }
 
     public void setProcessPaymentMap(ProcessPayment processPayment) {
-       processPaymentMap.put(processPayment.getPaymentRequest().getServiceSessionId(),processPayment);
+        processPaymentMap.put(processPayment.getPaymentRequest().getServiceSessionId(), processPayment);
 
+    }
+
+    public boolean isProcessPaymentMapEmpty() {
+        return processPaymentMap.isEmpty();
     }
 
     public ProcessPayment getProcessPayment(String GUID) {

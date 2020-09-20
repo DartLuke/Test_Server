@@ -1,8 +1,6 @@
 package com;
 
 import com.bash.Bash;
-import com.request.Client;
-import com.request.ServerTemp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,13 +16,22 @@ import java.util.Collections;
 public class App {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SpringApplication app = new SpringApplication(App.class);
         app.setDefaultProperties(Collections
-                .singletonMap("server.port", "5648"));
+                .singletonMap("server.port", "5773"));
         app.run(args);
+
+
+
         Bash bash = new Bash();
-        bash.executeDefault();
+        bash.executeScript(bash.STOP);
+        bash.executeScript(bash.SETUP);
+        bash.startInMultiThread();
+
+
+
+      //  bash.executeMore();
 
 
     }

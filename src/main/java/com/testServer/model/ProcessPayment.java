@@ -1,5 +1,6 @@
 package com.testServer.model;
 
+import com.TestData.CheckList;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,9 +22,11 @@ public class ProcessPayment {
     }
 
 
-
     @JsonIgnore
     private int counter = -1;
+
+    @JsonIgnore
+    private CheckList checkList=new CheckList();;
 
 
     @JsonProperty("Route")
@@ -78,12 +81,13 @@ public class ProcessPayment {
     public ProcessPayment() {
     }
 
-    public ProcessPayment(RoutingNode[] route, String callbackUrl, com.testServer.model.PaymentRequest paymentRequest, String nodeId) {
-        Route = route;
-        CallbackUrl = callbackUrl;
-        PaymentRequest = paymentRequest;
-        NodeId = nodeId;
-    }
+//    public ProcessPayment(RoutingNode[] route, String callbackUrl, com.testServer.model.PaymentRequest paymentRequest, String nodeId) {
+//        Route = route;
+//        CallbackUrl = callbackUrl;
+//        PaymentRequest = paymentRequest;
+//        NodeId = nodeId;
+//        checkList=new CheckList();
+//    }
 
     //**************************************************************************************
     @JsonIgnore
@@ -97,13 +101,93 @@ public class ProcessPayment {
     }
 
     @JsonIgnore
-    public String getMyNode() {
+    public CheckList getCheckList() {
+        return checkList;
+    }
 
-        if (counter==-1) {
+    @JsonIgnore
+    public void setCheckList(CheckList checkList) {
+        this.checkList = checkList;
+    }
+
+    @JsonIgnore
+    public void setCheckListProcessPaymentCallBack(boolean isDone, int i) {
+        if (i == -1) {
+            checkList.setProcessPaymentCallBack(isDone);
+        } else Route[i].getCheckList().setProcessPaymentCallBack(isDone);
+    }
+
+    @JsonIgnore
+    public void setCheckListProcessPaymentCallBack(String url) {
+        if (counter == -1) {
+            checkList.setProcessPaymentCallBack(url);
+        } else Route[counter].getCheckList().setProcessPaymentCallBack(url);
+    }
+
+
+    @JsonIgnore
+    public void setCheckListProcessCommandCallBack(String url, String nodeId) {
+       int counter=findNodebyId(nodeId);
+
+        if (counter == -1) {
+            checkList.setProcessCommandCallBack(url);
+        } else Route[counter].getCheckList().setProcessCommandCallBack(url);
+    }
+
+    @JsonIgnore
+    public void setCheckListProcessCommandCallBack(boolean isDone, String nodeId) {
+        int counter=findNodebyId(nodeId);
+
+        if (counter == -1) {
+            checkList.setProcessCommandCallBack(isDone);
+        } else Route[counter].getCheckList().setProcessCommandCallBack(isDone);
+    }
+
+
+    @JsonIgnore
+    public void setCheckListProcessCommand(String nodeId)
+    {
+        int counter=findNodebyId(nodeId);
+
+        if (counter == -1) {
+            checkList.setProcessCommand(true);
+        } else Route[counter].getCheckList().setProcessCommand(true);
+    }
+
+    public void setCheckListProcessResponse(String nodeId) {
+
+        int counter=findNodebyId(nodeId);
+
+        if (counter == -1) {
+            checkList.setProcessResponse(true);
+        } else Route[counter].getCheckList().setProcessResponse(true);
+
+    }
+
+    public int findNodebyId(String id) {
+        if (NodeId.equals(id)) return -1;
+        else
+            for (int i = 0; i < Route.length; i++) {
+                if (Route[i].getNodeId().equals(id)) return i;
+            }
+        return -2;
+    }
+
+    @JsonIgnore
+    public boolean isRouteNode() {
+        return counter == -1;
+    }
+
+    @JsonIgnore
+    public String getMyNodeId() {
+
+        if (counter == -1) {
             return NodeId;
         }
-        if(isEndOfArray()) return null;
+        if (isEndOfArray()) return null;
         else
-        return Route[counter].getNodeId();
+            return Route[counter].getNodeId();
     }
+
+
 }

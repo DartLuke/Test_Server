@@ -1,5 +1,7 @@
 package com.testServer.model;
 
+import com.TestData.CheckList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RoutingNode {
@@ -31,5 +33,18 @@ public class RoutingNode {
     public RoutingNode(String nodeId, String address) {
         NodeId = nodeId;
         Address = address;
+    }
+
+    @JsonIgnore
+    private CheckList checkList=new CheckList();
+
+    @JsonIgnore
+    public CheckList getCheckList() {
+        return checkList;
+    }
+
+    @JsonIgnore
+    public void setCheckList(CheckList checkList) {
+        this.checkList = checkList;
     }
 }
