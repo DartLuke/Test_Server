@@ -12,6 +12,7 @@ public class ProcessPayment {
     private String NodeId;                // request reference identification
     private String StatusCallbackUrl;
 
+
     @JsonProperty("StatusCallbackUrl")
     public String getStatusCallbackUrl() {
         return StatusCallbackUrl;
@@ -81,15 +82,6 @@ public class ProcessPayment {
     public ProcessPayment() {
     }
 
-//    public ProcessPayment(RoutingNode[] route, String callbackUrl, com.testServer.model.PaymentRequest paymentRequest, String nodeId) {
-//        Route = route;
-//        CallbackUrl = callbackUrl;
-//        PaymentRequest = paymentRequest;
-//        NodeId = nodeId;
-//        checkList=new CheckList();
-//    }
-
-    //**************************************************************************************
     @JsonIgnore
     public void counterPlus() {
         counter++;
@@ -171,6 +163,11 @@ public class ProcessPayment {
                 if (Route[i].getNodeId().equals(id)) return i;
             }
         return -2;
+    }
+
+    public void setChecklistCompleteCommand(String url, boolean isDone)
+    {
+        checkList.setCompleteCommand(url, isDone);
     }
 
     @JsonIgnore

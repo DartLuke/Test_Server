@@ -1,5 +1,7 @@
 package com.request;
 
+import com.TestData.TestClass;
+import com.bash.Bash;
 import com.singleton.Singleton;
 import com.testServer.model.*;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -9,9 +11,9 @@ import reactor.core.publisher.Mono;
 public class Client {
 
     //private    String url = "http://localhost:8080";7
-    String separator = "**************************************************************************************************";
+    private final String separator = "**************************************************************************************************";
     private WebClient webClient = WebClient.builder().build();//.baseUrl(url).build();
-    Singleton singleton = Singleton.getInstance().getInstance();
+    private Singleton singleton = Singleton.getInstance().getInstance();
 
     public void ProcessPaymentCallBack(String GUID) {
 
@@ -29,15 +31,27 @@ public class Client {
                     .uri(processPayment.getStatusCallbackUrl())
                     .body(Mono.just(new CompleteCommand(1, GUID)), CompleteCommand.class)
                     .exchange().subscribe(clientResponse ->
+            {
 
-                    System.out.println(separator + "\n" + str + "\nResponse code " + clientResponse.statusCode() + "\n" + separator));
 
-           if(singleton.isAllchecked()) {
-               System.err.println("**************************************************************************************************************");
-               System.err.println("**************************************************************************************************************");
-               System.err.println("**************************************************************************************************************");
-               System.err.println("**************************************************************************************************************");
-           }
+                processPayment.setChecklistCompleteCommand(processPayment.getCallbackUrl(), clientResponse.statusCode().is2xxSuccessful());
+
+
+                System.out.println(separator + "\n" + str + "\nResponse code " + clientResponse.statusCode() + "\n" + separator);
+            });
+
+            if (singleton.isAllchecked()) {
+                System.err.println("**************************************************************************************************************");
+                System.err.println("**************************************************************************************************************");
+                System.err.println("**************************************************************************************************************");
+                System.err.println("**************************************************************************************************************");
+                if (singleton.isTestEnabled()) {
+                    Bash bash = new Bash();
+                    bash.executeScript(bash.STOP);
+                    TestClass testClass = new TestClass();
+                    testClass.start();
+                }
+            }
             return;
         }
 
@@ -61,7 +75,7 @@ public class Client {
                 .exchange().subscribe(clientResponse ->
 
                 {
-                    processPayment.setCheckListProcessPaymentCallBack(true, i);
+                    processPayment.setCheckListProcessPaymentCallBack(clientResponse.statusCode().is2xxSuccessful(), i);
                     System.out.println(separator + "\n" + str + "\nResponse code " + clientResponse.statusCode() + "\n" + separator);
 
                 }
@@ -99,7 +113,7 @@ public class Client {
                             separator + "\n" +
                                     finalStr + "\nResponse code " + clientResponse.statusCode() + "\n" + separator);
 
-                    processPayment.setCheckListProcessCommandCallBack(true, processCommand.getNodeId());
+                    processPayment.setCheckListProcessCommandCallBack(clientResponse.statusCode().is2xxSuccessful(), processCommand.getNodeId());
                 }
         );
 

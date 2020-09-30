@@ -1,5 +1,7 @@
 package com.request;
 
+import com.TestData.TestClass;
+import com.bash.Bash;
 import com.singleton.Singleton;
 import com.testServer.model.*;
 import org.springframework.http.HttpStatus;
@@ -22,12 +24,14 @@ public class Server {
         String GUID = UUID.randomUUID().toString();
         // GUID = "1";
         singleton.setGUID(GUID);
+
+        singleton.getProcessPayment(GUID).getCheckList().getCreatePaymentInfo().setDone(true);
         res.put("ServiceSessionId", GUID);
 
 
         System.out.println("receiving request");
         System.out.println("api/utility/createPaymentInfo");
-        System.out.println("Generating Session Id "+GUID);
+        System.out.println("Generating Session Id " + GUID);
         return new ResponseEntity<Map>(res, HttpStatus.OK);
     }
 
@@ -35,8 +39,6 @@ public class Server {
     @RequestMapping(value = "api/gateway/processPayment", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<?> processPayment(@RequestBody ProcessPayment processPayment) {
         Singleton singleton = Singleton.getInstance();
-        processPayment.getPaymentRequest().trim();
-        singleton.setProcessPaymentMap(processPayment);
         Map<String, String> res = new HashMap<>();
 
         if (processPayment == null) {
@@ -44,11 +46,14 @@ public class Server {
             return new ResponseEntity<Map>(res, HttpStatus.BAD_REQUEST);
         }
 
+        processPayment.getPaymentRequest().trim();
+        singleton.setProcessPaymentMap(processPayment);
+
 
         System.out.println("receiving request");
         System.out.println("api/gateway/processPayment");
-        System.out.println("Session Id="+processPayment.getPaymentRequest().getServiceSessionId());
-
+        System.out.println("Session Id=" + processPayment.getPaymentRequest().getServiceSessionId());
+        processPayment.getCheckList().getProcessPayment().setDone(true);
 
         processPaymentProcessing(processPayment.getPaymentRequest().getServiceSessionId());
         res.put("Status", "Ok");
@@ -65,19 +70,19 @@ public class Server {
     private ResponseEntity<?> processCommand(@RequestBody ProcessCommand processCommand) {
         System.out.println("receiving request");
         System.out.println("api/utility/processCommand");
-        System.out.println("Session Id="+processCommand.getSessionId());
+        System.out.println("Session Id=" + processCommand.getSessionId());
 
         ProcessPayment processPayment = Singleton.getInstance().getProcessPayment(processCommand.getSessionId());
         processPayment.setCheckListProcessCommand(processCommand.getNodeId());
 
-        if(processCommand!=null) {
+        if (processCommand != null) {
             new Client().ProcessCommandCallBack(processCommand);
         }
 
         Map<String, String> res = new HashMap<>();
         res.put("Status", "Ok");
 
-       // return new ResponseEntity<ProcessCommand>(processCommand, HttpStatus.OK);
+        // return new ResponseEntity<ProcessCommand>(processCommand, HttpStatus.OK);
         return new ResponseEntity<Map>(res, HttpStatus.OK);
     }
 
@@ -86,7 +91,7 @@ public class Server {
     private ResponseEntity<?> processResponse(@RequestBody ProcessResponse processResponse) {
         System.out.println("receiving request");
         System.out.println("api/gateway/processResponse");
-        System.out.println("Session Id="+processResponse.getSessionId());
+        System.out.println("Session Id=" + processResponse.getSessionId());
 
         ProcessPayment processPayment = Singleton.getInstance().getProcessPayment(processResponse.getSessionId());
         processPayment.setCheckListProcessResponse(processResponse.getNodeId());
@@ -96,5 +101,16 @@ public class Server {
         res.put("Status", "Ok");
         return new ResponseEntity<Map>(res, HttpStatus.OK);
 
+
+    }
+
+    @RequestMapping(value = "api/stop", method = RequestMethod.GET)
+    private void stop() {
+        if (Singleton.getInstance().isTestEnabled()) {
+            Bash bash = new Bash();
+            bash.executeScript(bash.STOP);
+            TestClass testClass = new TestClass();
+            testClass.start();
+        }
     }
 }

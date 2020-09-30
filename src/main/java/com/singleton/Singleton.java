@@ -1,5 +1,6 @@
 package com.singleton;
 
+import com.TestData.CheckList;
 import com.testServer.model.ProcessPayment;
 
 import java.util.HashMap;
@@ -10,6 +11,15 @@ public class Singleton {
     //private String GUID;
     private Map<String, ProcessPayment> processPaymentMap = new HashMap<>();
     private Map<String, Boolean> processPaymentCheck = new HashMap<>();
+private boolean testEnabled;
+
+    public boolean isTestEnabled() {
+        return testEnabled;
+    }
+
+    public void setTestEnabled(boolean testEnabled) {
+        this.testEnabled = testEnabled;
+    }
 
     public static synchronized Singleton getInstance() {
         if (instance == null) {
@@ -27,12 +37,17 @@ public class Singleton {
     }
 
     public void setGUID(String GUID) {
-        processPaymentMap.put(GUID, null);
+        processPaymentMap.put(GUID, new ProcessPayment());
         processPaymentCheck.put(GUID, false);
 
     }
 
     public void setProcessPaymentMap(ProcessPayment processPayment) {
+
+
+            CheckList checkList = processPaymentMap.get(processPayment.getPaymentRequest().getServiceSessionId()).getCheckList();
+        processPayment.setCheckList(checkList);
+
         processPaymentMap.put(processPayment.getPaymentRequest().getServiceSessionId(), processPayment);
 
     }
@@ -49,6 +64,10 @@ public class Singleton {
 
     public ProcessPayment getProcessPayment() {
         return processPayment;
+    }
+
+    public Map<String, ProcessPayment> getProcessPaymentMap() {
+        return processPaymentMap;
     }
 
     public void setProcessPayment(ProcessPayment processPayment) {

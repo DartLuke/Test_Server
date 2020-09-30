@@ -1,6 +1,11 @@
 package com.TestData;
 
 public class CheckList {
+
+    private Struct createPaymentInfo = new Struct("api/utility/createPaymentInfo");//step1
+
+    private Struct processPayment = new Struct("api/gateway/processPayment");
+
     private Struct processPaymentCallBack;//step 3
 
     private Struct processCommand = new Struct("api/utility/processCommand");//step 4;
@@ -9,6 +14,9 @@ public class CheckList {
 
     private Struct processResponse = new Struct("api/gateway/processResponse"); //step 6
 
+
+    private Struct completeCommand; //final step
+
     public void setProcessPaymentCallBack(Struct processPaymentCallBack) {
         this.processPaymentCallBack = processPaymentCallBack;
     }
@@ -16,6 +24,15 @@ public class CheckList {
     public CheckList() {
         processPaymentCallBack = new Struct();
         processCommandCallBack = new Struct();
+        completeCommand=new Struct();
+    }
+
+    public Struct getCompleteCommand() {
+        return completeCommand;
+    }
+
+    public Struct getProcessPayment() {
+        return processPayment;
     }
 
     public void setProcessPaymentCallBack(String url) {
@@ -37,13 +54,17 @@ public class CheckList {
         processCommand.isDone = isDone;
     }
 
+    public Struct getCreatePaymentInfo() {
+        return createPaymentInfo;
+    }
+
     public Struct getProcessCommandCallBack() {
         return processCommandCallBack;
     }
 
-
-    public void setProcessCommandCallBack(Struct processCommandCallBack) {
-        this.processCommandCallBack = processCommandCallBack;
+    public void setCompleteCommand(String url, boolean isDone) {
+        this.completeCommand.Url = url;
+        this.completeCommand.setDone(isDone);
     }
 
     public void setProcessCommandCallBack(String url) {
@@ -68,8 +89,8 @@ public class CheckList {
         return processPaymentCallBack;
     }
 
-    private class Struct {
-        boolean isDone = false;
+    public class Struct {
+        private boolean isDone = false;
 
         public Struct() {
 
@@ -91,7 +112,7 @@ public class CheckList {
             Url = url;
         }
 
-        String Url;
+        private String Url;
 
         public Struct(String url) {
             Url = url;

@@ -24,10 +24,7 @@ public class App {
 
 
 
-        Bash bash = new Bash();
-        bash.executeScript(bash.STOP);
-        bash.executeScript(bash.SETUP);
-        bash.startInMultiThread();
+
 
 
 
