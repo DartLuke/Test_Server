@@ -1,6 +1,6 @@
 package com.request;
 
-import com.TestData.TestClass;
+import com.TestData.TestReport;
 import com.bash.Bash;
 import com.singleton.Singleton;
 import com.testServer.model.*;
@@ -109,8 +109,8 @@ public class Server {
         if (Singleton.getInstance().isTestEnabled()) {
             Bash bash = new Bash();
             bash.executeScript(bash.STOP);
-            TestClass testClass = new TestClass();
-            testClass.start();
+            TestReport testReport = new TestReport();
+            testReport.start();
         }
     }
 }
